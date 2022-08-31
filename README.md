@@ -1,5 +1,5 @@
 # Consulting Website
-A template for a consulting website made with **React.ts** and **TailwindCSS**.
+A website template for a consulting company made with **React.ts** and **TailwindCSS**.
 
 ## License
 
