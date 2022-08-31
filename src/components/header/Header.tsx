@@ -1,9 +1,18 @@
-import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import React, { useState, useEffect } from 'react'
+import { Link, useLocation } from 'react-router-dom'
 import { FaBars, FaTimes } from 'react-icons/fa'
 
 const Header = () => {
+    const location = useLocation()
   const [openMenu, setOpenMenu] = useState<Boolean>()
+  const [path, setPath] = useState(location.pathname)
+
+  useEffect(() => {
+    if (location.pathname !== path) {
+        setOpenMenu(false)
+        setPath(location.pathname)
+    }
+  }, [location])
 
   const renderNavMenu = () => {
     return (
@@ -17,7 +26,7 @@ const Header = () => {
 
   const renderMobileMenu = () => {
     return (
-        <ul className={`-z-10 absolute grid grid-rows-3 md:hidden bg-gray-100 drop-shadow-lg inset-x-0 ${openMenu ? 'bottom-[5rem]':'-bottom-[10.1rem]'} transition-all`}>
+        <ul className={`-z-10 absolute grid grid-rows-3 md:hidden bg-gray-100 drop-shadow-lg inset-x-0 ${openMenu ? '-bottom-[10.1rem]':'bottom-[5rem]'} transition-all`}>
             <li className='inline-flex p-3 border hover:bg-gray-200 text-xl'><Link className='w-full' to={'/industries'}>Industries</Link></li>
             <li className='inline-flex p-3 border hover:bg-gray-200 text-xl'><Link className='w-full' to={'/services'}>Services</Link></li>
             <li className='inline-flex p-3 border hover:bg-gray-200 text-xl'><Link className='w-full' to={'/about-us'}>About Us</Link></li>
@@ -34,9 +43,9 @@ const Header = () => {
             <div className='relative justify-self-end pl-5'>
                 {renderNavMenu()}            {
                     openMenu ? 
-                    <FaBars className='-z-20 block md:hidden cursor-pointer text-3xl' onClick={() => setOpenMenu(!openMenu)}/>
-                    :
                     <FaTimes className='-z-20 block md:hidden cursor-pointer text-3xl' onClick={() => setOpenMenu(!openMenu)}/>
+                    :
+                    <FaBars className='-z-20 block md:hidden cursor-pointer text-3xl' onClick={() => setOpenMenu(!openMenu)}/>
                 }
             </div>
         </div>
